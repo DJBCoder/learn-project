@@ -1,18 +1,29 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <button @click="handleClick">发送请求</button>
+    {{list}}
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+// 导入刚才编写好的api
+import memberApi from '@/api/member'
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
+  data() {
+    return {
+      list: []
+    }
+  },
+  methods: {
+    handleClick () {
+      // 调用接口的方法
+      memberApi.getList().then(response => {
+        const resp = response.data
+        if (resp.flag) {
+          this.list = resp.data
+        }
+      })
+    }
+  },
 }
 </script>
