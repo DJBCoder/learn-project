@@ -2,4 +2,4 @@
 export const CFG_BASE_URL 
 = process.env.NODE_ENV === 'production' ?
 'http://production.com' : 
-'http://mengxuegu.com:7300/mock/5e4104b78d6b810b0929207a'
+'http://localhost:5000'
