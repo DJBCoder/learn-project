@@ -1,13 +1,12 @@
-// 导入封装好的axios实例
-import axiosApi from '@/api'
+// 导入封装好的axios对象
+import request from '@/lib/request.js'
 
+// 导出对象
 export default {
-    // 获取 member list
-    getList () {
-        // 向服务器发送get请求
-        return axiosApi.request({
+    getList() {
+        return request({
             method: 'get',
-            url: '/member/list'
+            url:'/member/list'
         })
     }
 }
