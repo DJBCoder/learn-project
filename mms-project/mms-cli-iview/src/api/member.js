@@ -2,12 +2,16 @@
 import axiosApi from '@/api'
 
 export default {
-    // 获取 member list
-    getList () {
-        // 向服务器发送get请求
+    // 根据条件获取会员列表
+    search (page, size , searchMap) {
+        console.log(page, size, searchMap)
+        // 向服务器发送post请求
         return axiosApi.request({
-            method: 'get',
-            url: '/member/list'
+            method: 'post',
+            url: `member/list/search/${page}/${size}`,
+            data: {
+                searchMap
+            }
         })
     }
 }
