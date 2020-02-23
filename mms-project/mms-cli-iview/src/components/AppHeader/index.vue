@@ -6,7 +6,7 @@
         </a>
         <Dropdown @on-click="handleSysClick">
             <a href="javascript:void(0)">
-                下拉菜单
+                {{ user.name }}
                 <Icon type="ios-arrow-down"></Icon>
             </a>
             <DropdownMenu slot="list" >
