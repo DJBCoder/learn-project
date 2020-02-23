@@ -6,7 +6,7 @@
 git clone -b 分支名 ssh-地址名称
 ```
 
-&emsp;&emsp;目录结构说明：
+&emsp;&emsp;目录说明：
 
 + mms-project：会员管理系统的案例
   + mms-cli-iview：使用 iview + vue-cli3 版本
