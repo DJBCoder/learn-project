@@ -1,15 +1,14 @@
 const routes = [
     {
-      path: '/',
-      name: 'Home',
-      // @代表src目录
-      component: () => import('@/views/Home.vue')
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/Login')
     },
     {
-      path: '/about',
-      name: 'About',
-      component: () => import('@/views/About.vue')
+      path: '/',
+      name: 'layout',
+      component: () => import('@/components/Layout')
     }
-  ]
+]
 
-  export default routes
+export default routes

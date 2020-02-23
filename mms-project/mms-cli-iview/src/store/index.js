@@ -5,6 +5,8 @@ import state from './state'
 import mutations from './mutations'
 import getters from './getters'
 
+import login from './modules/login'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -13,5 +15,6 @@ export default new Vuex.Store({
   actions,
   getters,
   modules: {
+    login
   }
 })
