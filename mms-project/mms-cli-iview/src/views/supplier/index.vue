@@ -15,7 +15,7 @@
                 <Button type="primary" @click="getList"><Icon type="ios-search" />查询</Button>
             </FormItem>
             <FormItem>
-                <Button type="primary"><Icon type="md-pricetag" />新增</Button>
+                <Button type="primary" @click="addSupplierForm()"><Icon type="md-pricetag" />新增</Button>
             </FormItem>
             <FormItem>
                 <Button @click="$refs['findForm'].resetFields()">重置</Button>
@@ -40,7 +40,33 @@
         :page-size-opts="[10,20,30,40]"
         style="margin-top:20px;"/>
 
-        
+        <!-- 编辑框 -->
+         <Modal
+        v-model="editModal"
+        title="编辑供应商">
+          <Form ref="editForm" :model="editFormModel" :rules="editRule" :label-width="100">
+            <FormItem prop="name" label="供应商名称">
+                <Input type="text" v-model="editFormModel.name" placeholder="供应商名称">
+                </Input>
+            </FormItem>
+            <FormItem prop="linkman" label="联系人">
+                <Input type="text" v-model="editFormModel.linkman" placeholder="联系人">
+                </Input>
+            </FormItem>
+            <FormItem prop="mobile" label="联系电话">
+                <Input type="text" v-model="editFormModel.mobile" placeholder="联系电话">
+                </Input>
+            </FormItem>
+            <FormItem prop="remark" label="备注">
+                <Input type="textarea" v-model="editFormModel.remark" placeholder="备注">
+                </Input>
+            </FormItem>
+        </Form>
+        <template slot="footer">
+          <Button @click="editModal=false">取消</Button>
+          <Button type="primary" @click="isEdit ? updateSupplier() : addSupplier()">确定</Button>
+        </template>
+        </Modal>
     </div>
 </template>
 
@@ -49,6 +75,7 @@ import supplierApi from '@/api/supplier'
 export default {
   data() {
     return {
+      isEdit: false,
       list: [],
       columns: [
         {
@@ -85,10 +112,21 @@ export default {
         linkman: '',
         mobile: ''
       },
-      findForm: {
+      editFormModel:{
+        id: null,
         name: '',
         linkman: '',
-        mobile: ''
+        mobile: '',
+        remark:''
+      },
+      editModal:false,
+      editRule: {
+        name: [
+          {required: true, message: '请输入供应商名称', trigger: 'blur'}
+        ],
+        linkman: [
+          {required: true, message: '请输入供应商名称', trigger: 'blur'}
+        ]
       },
       total: 100,
       currentPage: 1,
@@ -113,6 +151,25 @@ export default {
     pageSizeChange(value){
       this.pageSize = value
       this.getList()
+    },
+    addSupplierForm(){
+      this.editModal = true
+      this.$nextTick(() => {
+        this.$refs['editForm'].resetFields()
+      })
+    },
+    updateSupplier(){
+
+    },
+    addSupplier(){
+      this.$refs['editForm'].validate((valid) => {
+        if(valid){
+          // 发送新增的请求
+
+          // 关闭
+          this.editModal = false
+        }
+      })
     }
   },
   created() {

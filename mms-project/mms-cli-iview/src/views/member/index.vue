@@ -96,82 +96,82 @@ export default {
         return {
           isEdit: false,
           editMemberModel: false,
-            payTypeOptions,
-            searchMap: {
-                cardNum: '',
-                name: '',
-                payType: '',
-                birthday: null,
-            },
-            editMap: {
-              id: '',
+          payTypeOptions,
+          searchMap: {
               cardNum: '',
               name: '',
-              birthday: null,
-              phone:'',
-              money: '',
               payType: '',
-              address: ''
-            },
-            editRules: {
-              cardNum: [
-                {required: true,message: '请输入会员卡号', trigger: 'blur'}
-              ],
-              name: [
-                {required: true,message: '请输入会员名称', trigger: 'blur'}
-              ]
-            },
-            curPage: 1,
-            pageSize: 10,
-            totalPage: 100,
-            list: [],
-            columns: [
-                {
-                    title: '序号',
-                    type: 'index',
-                    width: 60,
-                    align: 'center'
-                },
-                {
-                    title: '会员卡号',
-                    key: 'cardNum'
-                },
-                {
-                    title: '会员姓名',
-                    key: 'name'
-                },
-                {
-                    title: '会员生日',
-                    key: 'birthday'
-                },
-                {
-                    title: '手机号码',
-                    key: 'phone'
-                },
-                {
-                    title: '可用积分',
-                    key: 'integral'
-                },
-                {
-                    title: '开卡金额',
-                    key: 'money'
-                },
-                {
-                    title: '支付类型',
-                    key: 'payType',
-                    slot: 'payType'
-                },
-                {
-                    title: '会员地址',
-                    key: 'address'
-                },
-                {
-                    title: '操作',
-                    slot: 'action',
-                    width: '150px'
-                }
+              birthday: null,
+          },
+          editMap: {
+            id: '',
+            cardNum: '',
+            name: '',
+            birthday: null,
+            phone:'',
+            money: '',
+            payType: '',
+            address: ''
+          },
+          editRules: {
+            cardNum: [
+              {required: true,message: '请输入会员卡号', trigger: 'blur'}
             ],
-        }
+            name: [
+              {required: true,message: '请输入会员名称', trigger: 'blur'}
+            ]
+          },
+          curPage: 1,
+          pageSize: 10,
+          totalPage: 100,
+          list: [],
+          columns: [
+              {
+                  title: '序号',
+                  type: 'index',
+                  width: 60,
+                  align: 'center'
+              },
+              {
+                  title: '会员卡号',
+                  key: 'cardNum'
+              },
+              {
+                  title: '会员姓名',
+                  key: 'name'
+              },
+              {
+                  title: '会员生日',
+                  key: 'birthday'
+              },
+              {
+                  title: '手机号码',
+                  key: 'phone'
+              },
+              {
+                  title: '可用积分',
+                  key: 'integral'
+              },
+              {
+                  title: '开卡金额',
+                  key: 'money'
+              },
+              {
+                  title: '支付类型',
+                  key: 'payType',
+                  slot: 'payType'
+              },
+              {
+                  title: '会员地址',
+                  key: 'address'
+              },
+              {
+                  title: '操作',
+                  slot: 'action',
+                  width: '150px'
+              }
+          ],
+      }
     },
     methods: {
         getList () {
