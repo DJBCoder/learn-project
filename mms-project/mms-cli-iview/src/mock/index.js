@@ -8,6 +8,8 @@ import login from './login'
 import password from './password'
 // 导出会员模块
 import member from './member'
+// 到处供应商模块
+import supplier from './supplier'
 
 // 登陆
 Mock.mock(`${CFG_BASE_URL}/user/login`, "post" , login.login())
@@ -38,6 +40,9 @@ Mock.mock(RegExp(`${CFG_BASE_URL}/member/` + ".*"), "put", member.update())
 
 // 删除会员信息
 Mock.mock(RegExp(`${CFG_BASE_URL}/member/` + ".*"), 'delete', member.delete())
+
+// 查询供应商列表
+Mock.mock(RegExp(`${CFG_BASE_URL}/supplier/list/search/` + ".*\/" + ".*"), "post", supplier.search())
 
 // 导出Mock
 export default Mock

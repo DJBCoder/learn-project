@@ -65,7 +65,9 @@
                     <Input v-model="editMap.money" placeholder="开卡金额"></Input>
                 </FormItem>
                 <FormItem prop="payType" label="支付类型">
-                    <Input v-model="editMap.payType" placeholder="支付类型"></Input>
+                  <Select v-model="editMap.payType" style="width:200px">
+                      <Option v-for="item in payTypeOptions" :value="item.type" :key="item.type">{{ item.name }}</Option>
+                  </Select>
                 </FormItem>
                 <FormItem prop="address" label="会员地址">
                     <Input v-model="editMap.address" placeholder="会员地址" type="textarea"></Input>
