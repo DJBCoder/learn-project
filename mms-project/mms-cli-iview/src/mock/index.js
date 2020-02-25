@@ -30,5 +30,11 @@ Mock.mock( RegExp(`${CFG_BASE_URL}/member/list/search/` + ".*" + "\/" + ".*"), "
 // 新建会员
 Mock.mock(`${CFG_BASE_URL}/member`, "post", member.add())
 
+// 根据id获取会员信息
+Mock.mock( RegExp(`${CFG_BASE_URL}/member/` + ".*"), "get", member.getUserInfoById())
+
+// 修改会信息
+Mock.mock(RegExp(`${CFG_BASE_URL}/member/` + ".*"), "put", member.update())
+
 // 导出Mock
 export default Mock

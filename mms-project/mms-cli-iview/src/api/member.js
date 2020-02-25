@@ -7,7 +7,7 @@ export default {
         // 向服务器发送post请求
         return axiosApi.request({
             method: 'post',
-            url: `member/list/search/${page}/${size}`,
+            url: `/member/list/search/${page}/${size}`,
             data: {
                 searchMap
             }
@@ -16,12 +16,30 @@ export default {
 
     // 新建会员
     add (editMap) {
-      console.log(editMap)
       return axiosApi.request({
         method: 'post',
         url: '/member',
         data : {
           editMap
+        }
+      })
+    },
+
+    // 根据ID获取人员信息
+    getUserInfoById(id){
+      return axiosApi.request({
+        method: 'get',
+        url: `/member/${id}`
+      })
+    },
+
+    // 更新会员数据
+    update(memberInfo) {
+      return axiosApi.request({
+        method: 'put',
+        url: `/member/${memberInfo.id}`,
+        data : {
+          memberInfo
         }
       })
     }

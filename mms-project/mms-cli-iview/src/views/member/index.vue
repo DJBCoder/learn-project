@@ -32,7 +32,7 @@
                 <span>{{ row.payType | filterType }}</span>
             </template>
             <template slot-scope="{ row, index }" slot="action">
-                <Button type="primary" size="small" style="margin-right: 5px" >编辑</Button>
+                <Button type="primary" size="small" style="margin-right: 5px" @click="updateMember(row.id)">编辑</Button>
                 <Button type="error" size="small">删除</Button>
             </template>
         </Table>
@@ -73,7 +73,7 @@
             </Form>
             <template slot="footer">
               <Button @click="editMemberModel = false">取消</Button>
-              <Button @click="add" type="primary">确定</Button>
+              <Button @click="isEdit ? update() : add()" type="primary">确定</Button>
             </template>
         </Modal>
     </div>
@@ -91,6 +91,7 @@ const payTypeOptions = [
 export default {
     data() {
         return {
+          isEdit: false,
           editMemberModel: false,
             payTypeOptions,
             searchMap: {
@@ -100,6 +101,7 @@ export default {
                 birthday: null,
             },
             editMap: {
+              id: '',
               cardNum: '',
               name: '',
               birthday: null,
@@ -187,10 +189,12 @@ export default {
             this.getList()
         },
         addMember() {
-          // 清空输入表格
-          this.$refs['editForm'].resetFields()
           // 弹出对话框
-          this.editMemberModel = true
+          this.editMemberModel = true,
+          this.$nextTick(() => {
+            // 清空输入表格
+            this.$refs['editForm'].resetFields()
+          })
         },
         add(){
           console.log('aaa')
@@ -211,6 +215,35 @@ export default {
                   this.$Message.warning(memberRes.message)
                 }
               })
+            }
+          })
+        },
+        updateMember(id) {
+          this.isEdit = true
+          // 打开编辑窗口
+          this.addMember()
+          // 根据id 发送请求人员信息的请求
+          memberApi.getUserInfoById(id).then(response => {
+            const resp = response.data
+            if(resp.flag){  
+               // 初始化
+               console.log(resp.data)
+               this.editMap = resp.data          
+            }
+          })
+         
+        },
+        update () {
+          // 发送更新请求
+          memberApi.update(this.editMap).then(response => {
+            const resp = response.data
+            if (resp.flag) {
+              this.isEdit = false
+              this.editMemberModel = false
+              this.getList()
+              this.$Message.success(resp.message)
+            } else {
+              this.$Message.warning(resp.message)
             }
           })
         }
