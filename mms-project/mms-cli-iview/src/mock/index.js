@@ -27,5 +27,8 @@ Mock.mock(`${CFG_BASE_URL}/user/pwd`, 'put', password.changePwd())
 // 搜索会员列表
 Mock.mock( RegExp(`${CFG_BASE_URL}/member/list/search/` + ".*" + "\/" + ".*"), "post", member.search())
 
+// 新建会员
+Mock.mock(`${CFG_BASE_URL}/member`, "post", member.add())
+
 // 导出Mock
 export default Mock

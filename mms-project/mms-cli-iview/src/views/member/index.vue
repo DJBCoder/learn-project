@@ -20,7 +20,7 @@
                 <Button type="primary" @click="getList"><Icon type="ios-search" />查询</Button>
             </FormItem>
             <FormItem>
-                <Button type="primary"><Icon type="md-pricetag" />新增</Button>
+                <Button type="primary" @click="addMember"><Icon type="md-pricetag" />新增</Button>
             </FormItem>
             <FormItem>
                 <Button @click="$refs['findForm'].resetFields()">重置</Button>
@@ -40,6 +40,42 @@
         :page-size-opts="[10,20,30,50]"
         @on-change="changeCurPage"
         @on-page-size-change="changePageSize"/>
+
+        <Modal
+            v-model="editMemberModel"
+            title="编辑会员">
+            <Form ref="editForm" :model="editMap" :label-width="80" :rules="editRules">
+                <FormItem prop="cardNum" label="会员卡号">
+                    <Input v-model="editMap.cardNum" placeholder="会员卡号"></Input>
+                </FormItem>
+                <FormItem prop="name" label="会员姓名">
+                    <Input v-model="editMap.name" placeholder="会员姓名"></Input>
+                </FormItem>
+                <FormItem prop="birthday" label="会员生日">
+                    <DatePicker 
+                    v-model="editMap.birthday" 
+                    type="date" 
+                    placeholder="会员生日" 
+                    format="yyyy-MM-dd"></DatePicker>
+                </FormItem>
+                <FormItem prop="phone" label="手机号码">
+                    <Input v-model="editMap.phone" placeholder="手机号码"></Input>
+                </FormItem>
+                <FormItem prop="money" label="开卡金额">
+                    <Input v-model="editMap.money" placeholder="开卡金额"></Input>
+                </FormItem>
+                <FormItem prop="payType" label="支付类型">
+                    <Input v-model="editMap.payType" placeholder="支付类型"></Input>
+                </FormItem>
+                <FormItem prop="address" label="会员地址">
+                    <Input v-model="editMap.address" placeholder="会员地址" type="textarea"></Input>
+                </FormItem>
+            </Form>
+            <template slot="footer">
+              <Button @click="editMemberModel = false">取消</Button>
+              <Button @click="add" type="primary">确定</Button>
+            </template>
+        </Modal>
     </div>
 </template>
 <script>
@@ -55,12 +91,30 @@ const payTypeOptions = [
 export default {
     data() {
         return {
+          editMemberModel: false,
             payTypeOptions,
             searchMap: {
                 cardNum: '',
                 name: '',
                 payType: '',
                 birthday: null,
+            },
+            editMap: {
+              cardNum: '',
+              name: '',
+              birthday: null,
+              phone:'',
+              money: '',
+              payType: '',
+              address: ''
+            },
+            editRules: {
+              cardNum: [
+                {required: true,message: '请输入会员卡号', trigger: 'blur'}
+              ],
+              name: [
+                {required: true,message: '请输入会员名称', trigger: 'blur'}
+              ]
             },
             curPage: 1,
             pageSize: 10,
@@ -131,6 +185,34 @@ export default {
         changePageSize(value){
             this.pageSize = value
             this.getList()
+        },
+        addMember() {
+          // 清空输入表格
+          this.$refs['editForm'].resetFields()
+          // 弹出对话框
+          this.editMemberModel = true
+        },
+        add(){
+          console.log('aaa')
+          // 判断是否满足条件
+          this.$refs['editForm'].validate((valid) => {
+            if (valid) {
+              // 提交新建的请求
+              memberApi.add(this.editMap).then(response => {
+                const memberRes = response.data
+                if(memberRes.flag) {
+                  this.$Message.success(memberRes.message)
+                  // 关闭窗口
+                  this.editMemberModel = false
+
+                  // 获取会员列表
+                  this.getList()
+                } else {
+                  this.$Message.warning(memberRes.message)
+                }
+              })
+            }
+          })
         }
     },
     created() {
