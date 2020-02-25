@@ -17,5 +17,13 @@ export default {
               }]
             }
         }
+    },
+
+    add(){
+      return {
+        "code": 2000,
+        "flag": true,
+        "message": "新增成功"
+      }
     }
 }

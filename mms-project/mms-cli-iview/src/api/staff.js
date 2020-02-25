@@ -9,5 +9,15 @@ export default {
                 searchMap
             }
         })
+    },
+
+    add(staffObj) {
+        return axiosApi.request({
+            method: 'post',
+            url: '/staff',
+            data: {
+                staffObj
+            }
+        })
     }
 }

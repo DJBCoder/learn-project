@@ -61,5 +61,7 @@ Mock.mock(RegExp(`${CFG_BASE_URL}/supplier/` + ".*"), "delete", supplier.delete(
 // 搜索员工
 Mock.mock(RegExp(`${CFG_BASE_URL}/staff/list/search/` + ".*" + "/" + ".*"), "post", staff.search())
 
+// 添加员工
+Mock.mock(`${CFG_BASE_URL}/staff`, 'post', staff.add())
 // 导出Mock
 export default Mock

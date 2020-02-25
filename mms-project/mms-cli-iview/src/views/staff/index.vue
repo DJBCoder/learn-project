@@ -12,7 +12,7 @@
                 <Button type="primary" @click="getList"><Icon type="ios-search" />查询</Button>
             </FormItem>
             <FormItem>
-                <Button type="primary" @click="addSupplierForm()"><Icon type="md-pricetag" />新增</Button>
+                <Button type="primary" @click="addSatffForm()"><Icon type="md-pricetag" />新增</Button>
             </FormItem>
             <FormItem>
                 <Button @click="$refs['findform'].resetFields()">重置</Button>
@@ -36,6 +36,39 @@
         @on-page-size-change="pageSizeChange"
         style="margin-top:20px"/>
         <!-- 弹窗 -->
+
+        <Modal
+            v-model="editModal"
+            title="编辑员工"
+            >
+            <Form :model="editModel" ref="editform" :rules="editRule" :label-width="80">
+                <FormItem prop="username" label="用户名">
+                    <Input v-model="editModel.username" placeholder="用户名"></Input>
+                </FormItem>
+                <FormItem prop="name" label="姓名">
+                    <Input v-model="editModel.name" placeholder="姓名"></Input>
+                </FormItem>
+                <FormItem prop="age" label="年龄">
+                    <Input v-model="editModel.age" placeholder="年龄"></Input>
+                </FormItem>
+                <FormItem prop="mobile" label="电话">
+                    <Input v-model="editModel.mobile" placeholder="电话"></Input>
+                </FormItem>
+                <FormItem prop="salary" label="薪资">
+                    <Input v-model="editModel.salary" placeholder="薪资"></Input>
+                </FormItem>
+                <FormItem prop="entryDate" label="入职时间">
+                    <DatePicker type="date" placeholder="入职时间" 
+                    v-model="editModel.entryDate"
+                    format="yyyy-MM-dd"></DatePicker>
+                </FormItem>
+            </Form>
+            <div slot="footer">
+                <Button @click="editModal = false">取消</Button>
+                <Button type="primary" @click="isEdit ? updateStaff() : addStaff()">确定</Button>
+            </div>
+        </Modal>
+
     </div>
 </template>
 
@@ -44,6 +77,25 @@ import staffApi from '@/api/staff'
 export default {
     data() {
         return {
+            isEdit: false,
+            editModal: false,
+            editModel: {
+                id: null,
+                username: '',
+                name: '',
+                age: 0,
+                mobile: '',
+                salary: 0,
+                entryDate: null
+            },
+            editRule: {
+                username: [
+                    {required: true, message: '请输入用户名', trigger: 'blur'}
+                ],
+                name: [
+                    {required: true, message: '请输入用户名', trigger: 'blur'}
+                ],
+            },
             findFormModel:{
                 name: '',
                 username: ''
@@ -109,7 +161,25 @@ export default {
             this.pageSize = value
             this.getList()
         },
-        addSupplierForm() {
+        addSatffForm() {
+            this.editModal = true
+            this.$nextTick(() => {
+                this.$refs['editform'].resetFields()
+            })
+        },
+        addStaff(){
+            staffApi.add(this.editModel).then(response => {
+                const resp = response.data
+                if(resp.flag){
+                    this.$Message.success(resp.message)
+                    this.editModal = false
+                    this.getList()
+                } else {
+                    this.$Message.warning(resp.message)
+                }
+            })
+        },
+        updateStaff(){
 
         }
     },
