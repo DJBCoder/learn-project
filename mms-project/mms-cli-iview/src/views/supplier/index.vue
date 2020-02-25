@@ -25,8 +25,9 @@
         <!-- 表格 -->
         <Table height="450" :columns="columns" :data="list">
           <template slot-scope="{ row }" slot="action">
-            <Button type="primary" size="small" style="margin-right: 5px">编辑</Button>
-            <Button type="error" size="small" >删除</Button>
+            <Button type="primary" size="small" style="margin-right: 5px"
+            @click="updateSupplierForm(row.id)">编辑</Button>
+            <Button type="error" size="small" @click="deleteSupplier(row.id)">删除</Button>
           </template>
         </Table>
         
@@ -159,16 +160,69 @@ export default {
       })
     },
     updateSupplier(){
-
+      // 发送更新请求
+      supplierApi.update(this.editFormModel).then(response => {
+        const resp = response.data
+        if (resp.flag) {
+          this.$Message.success(resp.message)
+          this.editModal = false
+          this.isEdit = false
+          this.getList()
+        }else {
+          this.$Message.warning()
+        }
+      })
     },
     addSupplier(){
       this.$refs['editForm'].validate((valid) => {
         if(valid){
           // 发送新增的请求
-
-          // 关闭
-          this.editModal = false
+          supplierApi.add(this.editFormModel).then(response => {
+            const resp = response.data
+            if(resp.flag) {
+              this.$Message.success(resp.message)
+              this.getList()
+              // 关闭
+              this.editModal = false
+            } else {
+              this.$Message.warning(resp.message)
+            }
+          })
+          
         }
+      })
+    },
+    updateSupplierForm(id){
+      this.isEdit = true
+      // 打开窗口
+      this.addSupplierForm()
+
+      // 发送请求供应商信息的消息
+      supplierApi.getInfoById(id).then(response => {
+        const req = response.data
+        if(req.flag){
+          this.editFormModel = req.data
+        }
+      })
+    },
+    deleteSupplier(id){
+      this.$Modal.confirm({
+        title: '通知信息',
+        content: '确定要删除吗？',
+        okText: '确定',
+        cancelText: '取消',
+        onOk:() => {
+          supplierApi.delete(id).then(response => {
+            const resp = response.data
+            if (resp.flag) {
+              this.getList()
+              this.$Message.success(resp.message)
+            } else {
+              this.$Message.warning(resp.message)
+            }
+          })
+        },
+        closable: false
       })
     }
   },

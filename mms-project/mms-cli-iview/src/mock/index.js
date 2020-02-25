@@ -44,5 +44,17 @@ Mock.mock(RegExp(`${CFG_BASE_URL}/member/` + ".*"), 'delete', member.delete())
 // 查询供应商列表
 Mock.mock(RegExp(`${CFG_BASE_URL}/supplier/list/search/` + ".*\/" + ".*"), "post", supplier.search())
 
+// 新增供应商
+Mock.mock(`${CFG_BASE_URL}/supplier`, 'post', supplier.add())
+
+// 获取供应商信息
+Mock.mock(RegExp(`${CFG_BASE_URL}/supplier/` + ".*"), "get", supplier.getInfoById())
+
+// 更新供应商
+Mock.mock(RegExp(`${CFG_BASE_URL}/supplier/` + ".*"), "put", supplier.update())
+
+// 删除供应商
+Mock.mock(RegExp(`${CFG_BASE_URL}/supplier/` + ".*"), "delete", supplier.delete())
+
 // 导出Mock
 export default Mock
