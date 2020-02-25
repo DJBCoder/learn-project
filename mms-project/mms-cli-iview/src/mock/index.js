@@ -36,5 +36,8 @@ Mock.mock( RegExp(`${CFG_BASE_URL}/member/` + ".*"), "get", member.getUserInfoBy
 // 修改会信息
 Mock.mock(RegExp(`${CFG_BASE_URL}/member/` + ".*"), "put", member.update())
 
+// 删除会员信息
+Mock.mock(RegExp(`${CFG_BASE_URL}/member/` + ".*"), 'delete', member.delete())
+
 // 导出Mock
 export default Mock

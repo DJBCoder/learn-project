@@ -42,5 +42,13 @@ export default {
           memberInfo
         }
       })
+    },
+
+    // 删除会员
+    delete(id){
+      return axiosApi.request({
+        method: 'delete',
+        url: `/member/${id}`
+      })
     }
-}
+ }

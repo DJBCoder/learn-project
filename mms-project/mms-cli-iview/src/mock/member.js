@@ -62,5 +62,15 @@ export default {
         "flag": true,
         "message": "修改成功"
       }
+    },
+
+    // 删除会员
+    delete () {
+      console.log('mock member delete')
+      return {
+        "code": 2000,
+        "flag": true,
+        "message": "删除成功"
+      }
     }
 }

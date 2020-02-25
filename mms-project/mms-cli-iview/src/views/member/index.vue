@@ -31,9 +31,9 @@
             <template slot-scope="{ row }" slot="payType">
                 <span>{{ row.payType | filterType }}</span>
             </template>
-            <template slot-scope="{ row, index }" slot="action">
+            <template slot-scope="{ row }" slot="action">
                 <Button type="primary" size="small" style="margin-right: 5px" @click="updateMember(row.id)">编辑</Button>
-                <Button type="error" size="small">删除</Button>
+                <Button type="error" size="small" @click="deleteMember(row.id)">删除</Button>
             </template>
         </Table>
         <Page :total="totalPage" show-sizer show-elevator show-total :current="curPage" :page-size="pageSize"
@@ -76,6 +76,7 @@
               <Button @click="isEdit ? update() : add()" type="primary">确定</Button>
             </template>
         </Modal>
+
     </div>
 </template>
 <script>
@@ -246,7 +247,28 @@ export default {
               this.$Message.warning(resp.message)
             }
           })
-        }
+        },
+        deleteMember(id){
+          const _this = this
+          this.$Modal.confirm({
+            title: '通知信息',
+            content: '确定要删除吗？',
+            okText: '确定',
+            cancelText: '取消',
+            onOk(){
+              memberApi.delete(id).then(response => {
+                const resp = response.data
+                if (resp.flag) {
+                  _this.getList()
+                  this.$Message.success(resp.message)
+                } else {
+                  this.$Message.warning(resp.message)
+                }
+              })
+            },
+            closable: false
+          })
+        },
     },
     created() {
         this.getList()
