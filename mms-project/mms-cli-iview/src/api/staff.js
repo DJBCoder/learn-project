@@ -19,5 +19,29 @@ export default {
                 staffObj
             }
         })
+    },
+
+    getInfoById(id){
+      return axiosApi.request({
+        method: 'get',
+        url: `/staff/${id}`
+      })
+    },
+
+    update (staffObj) {
+      return axiosApi.request({
+        method: 'put',
+        url: `/staff/${staffObj.id}`,
+        data: {
+          staffObj
+        }
+      })
+    },
+
+    delete (id) {
+      return axiosApi.request({
+        method: 'delete',
+        url: `/staff/${id}`
+      })
     }
 }

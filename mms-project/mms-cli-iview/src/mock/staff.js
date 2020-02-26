@@ -25,5 +25,38 @@ export default {
         "flag": true,
         "message": "新增成功"
       }
+    },
+
+    getInfoById(){
+      return {
+        "code": 2000,
+        "flag": true,
+        "message": "查询成功",
+        "data": {
+          "id": 10,
+          "username|5": "@word(1)",
+          "name": "@cname",
+          "age": "@integer(0,120)",
+          "mobile|11": "@integer(0,9)",
+          "salary": "@float(8000, 20000, 1, 2)",
+          "entryDate": "@date"
+        }
+      }
+    },
+
+    update () {
+      return {
+        "code": 2000,
+        "flag": true,
+        "message": "修改成功"
+      }
+    },
+
+    delete (){
+      return {
+        "code": 2000,
+        "flag": true,
+        "message": "删除成功"
+      }
     }
 }

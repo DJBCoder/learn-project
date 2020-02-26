@@ -22,8 +22,9 @@
         <!-- 表格 -->
         <Table height="450" :columns="columns" :data="list">
             <template slot="action" slot-scope="{ row }">
-                <Button type="primary" size="small" style="margin-right: 5px">编辑</Button>
-                <Button type="error" size="small">删除</Button>
+                <Button type="primary" size="small" style="margin-right: 5px"
+                 @click="updateStaffForm(row.id)">编辑</Button>
+                <Button type="error" size="small" @click="deleteStaff(row.id)">删除</Button>
             </template>
         </Table>
 
@@ -180,7 +181,48 @@ export default {
             })
         },
         updateStaff(){
-
+          // 发送更新请求
+          staffApi.update(this.editModel).then(response => {
+            const resp = response.data
+            if(resp.flag){
+              this.editModal = false
+              this.$Message.success(resp.message)
+              this.getList()
+            } else {
+              this.$Message.warning(resp.message)
+            }
+          })
+        },
+        updateStaffForm(id){
+          this.addSatffForm()
+          this.isEdit = true
+          // 发送请求获取员工数据
+          staffApi.getInfoById(id).then(response => {
+            const resp = response.data
+            if(resp.flag){
+              this.editModel = resp.data
+            }
+          })
+        },
+        deleteStaff(id){
+          this.$Modal.confirm({
+            title: '通知信息',
+            content: '确定要删除吗？',
+            okText: '确定',
+            cancelText: '取消',
+            onOk:() => {
+              staffApi.delete(id).then(response => {
+                const resp = response.data
+                if (resp.flag) {
+                  this.getList()
+                  this.$Message.success(resp.message)
+                } else {
+                  this.$Message.warning(resp.message)
+                }
+              })
+            },
+            closable: false
+          })
         }
     },
     created(){
