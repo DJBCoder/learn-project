@@ -11,10 +11,10 @@
             <FormItem prop="mobile">
                 <Input v-model="searchForm.mobile" placeholder="联系电话"></Input>
             </FormItem>
-            <FormItem>
+            <FormItem v-if="!isDialog">
                 <Button type="primary" @click="getList"><Icon type="ios-search" />查询</Button>
             </FormItem>
-            <FormItem>
+            <FormItem v-if="!isDialog">
                 <Button type="primary" @click="addSupplierForm()"><Icon type="md-pricetag" />新增</Button>
             </FormItem>
             <FormItem>
@@ -23,7 +23,8 @@
         </Form> 
 
         <!-- 表格 -->
-        <Table height="450" :columns="columns" :data="list">
+        <Table height="450" :columns="columnsComputer" :data="list" :highlight-row="isDialog" 
+        @on-current-change="curRowChange">
           <template slot-scope="{ row }" slot="action">
             <Button type="primary" size="small" style="margin-right: 5px"
             @click="updateSupplierForm(row.id)">编辑</Button>
@@ -33,7 +34,7 @@
         
         <!-- 分页表单 -->
         <Page :total="total" 
-        show-sizer show-total show-elevator 
+        show-sizer :show-total="!isDialog" :show-elevator="!isDialog" 
         :current='currentPage'
         :page-size = "pageSize"
         @on-change="pageChange"
@@ -74,40 +75,16 @@
 <script>
 import supplierApi from '@/api/supplier'
 export default {
+  props: {
+        isDialog : {
+          type: Boolean,
+          default: false
+        }
+      },
   data() {
     return {
       isEdit: false,
       list: [],
-      columns: [
-        {
-          title: '序号',
-          type: 'index',
-          width: 60,
-          align: 'center'
-        },
-        {
-          title: '供应商名称',
-          key: 'name'
-        },
-        {
-          title: '联系人',
-          key: 'linkman'
-        },
-        {
-          title: '联系电话',
-          key: 'mobile'
-        },
-        {
-          title: '备注',
-          key: 'remark'
-        },
-        {
-          title: '操作',
-          slot: 'action',
-          width: 150,
-          align: 'center'
-        }
-      ],
       searchForm: {
         name: '',
         linkman: '',
@@ -135,6 +112,9 @@ export default {
     }
   },
   methods: {
+    curRowChange(currentRow,oldCurrentRow){
+      this.$emit('changename', currentRow.name)
+    },
     getList() {
       console.log(this.pageSize, this.currentPage, this.searchForm)
       supplierApi.search(this.currentPage,this.pageSize,this.searchForm).then(response => {
@@ -226,9 +206,57 @@ export default {
       })
     }
   },
-  
   created() {
     this.getList()
+  },
+  computed: {
+    columnsComputer () {
+      return this.isDialog ? [
+        {
+          title: '序号',
+          type: 'index',
+          width: 60,
+          align: 'center'
+        },
+        {
+          title: '供应商名称',
+          key: 'name'
+        },
+        {
+          title: '联系人',
+          key: 'linkman'
+        }
+      ] : [
+        {
+          title: '序号',
+          type: 'index',
+          width: 60,
+          align: 'center'
+        },
+        {
+          title: '供应商名称',
+          key: 'name'
+        },
+        {
+          title: '联系人',
+          key: 'linkman'
+        },
+        {
+          title: '联系电话',
+          key: 'mobile'
+        },
+        {
+          title: '备注',
+          key: 'remark'
+        },
+        {
+          title: '操作',
+          slot: 'action',
+          width: 150,
+          align: 'center'
+        }
+      ] 
+    }
   },
 }
 </script>

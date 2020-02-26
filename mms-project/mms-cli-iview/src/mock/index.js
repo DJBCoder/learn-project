@@ -12,6 +12,8 @@ import member from './member'
 import supplier from './supplier'
 // 导出员工模块
 import staff from './staff'
+// 商品模块
+import goods from './goods'
 
 // 登陆
 Mock.mock(`${CFG_BASE_URL}/user/login`, "post" , login.login())
@@ -72,5 +74,21 @@ Mock.mock(RegExp(`${CFG_BASE_URL}/staff/` + ".*"), "put", staff.update())
 
 // 删除员工
 Mock.mock(RegExp(`${CFG_BASE_URL}/staff/` + ".*"), "delete", staff.delete())
+
+// 商品
+Mock.mock(RegExp(`${CFG_BASE_URL}/goods/list/search/` + ".*" + "/" + ".*") , "post", goods.search())
+
+// 新增商品
+Mock.mock(RegExp(`${CFG_BASE_URL}/goods`),  "post", goods.add())
+
+// 获取商品信息
+Mock.mock(RegExp(`${CFG_BASE_URL}/goods/` + ".*"),  "get", goods.getInfoById())
+
+// 修改商品
+Mock.mock(RegExp(`${CFG_BASE_URL}/goods/` + ".*"),  "put", goods.update())
+
+// 删除商品
+Mock.mock(RegExp(`${CFG_BASE_URL}/goods/` + ".*"),  "delete", goods.delete())
+
 // 导出Mock
 export default Mock
