@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07-结构伪类选择器-隔行</title>
+    <style>
+        /* 奇数 */
+        li:nth-child(odd){
+            color: red;
+        }
+        /* 偶数 */
+        li:nth-child(even){
+            color: orange;
+        }
+
+        /* 也可以使用下面的 */
+        /* 奇数 */
+        /* li:nth-child(2n+1){
+            color: orchid;
+        } */
+        /* 偶数 */
+        /* li:nth-child(2n){
+            color: peru;
+        } */
+    </style>
+</head>
+<!-- 07-结构伪类选择器-隔行 -->
+<body>
+    <ul>
+        <li>第一行</li>
+        <li>第二行</li>
+        <li>第三行</li>
+        <li>第四行</li>
+        <li>第五行</li>
+        <li>第六行</li>
+    </ul>
+</body>
+</html>

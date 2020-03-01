@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>结构伪类选择器</title>
+    <style>
+        /* 第一个成红色 */
+        li:first-child {
+            color: red;
+        }
+        /* 最后一个绿色 */
+        li:last-child {
+            color: blue;
+        }
+        /* 第3个变成黄色 */
+        li:nth-child(3) {
+            color: orange;
+        }
+        /* 倒数第3个 */
+        li:nth-last-child(3){
+            color: orchid;
+        }
+    </style>
+</head>
+<!-- 05-结构伪类选择器 -->
+<body>
+    <ul>
+        <li>第一行</li>
+        <li>第二行</li>
+        <li>第三行</li>
+        <li>第四行</li>
+        <li>第五行</li>
+        <li>第六行</li>
+    </ul>
+</body>
+</html>
